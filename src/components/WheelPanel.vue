@@ -328,4 +328,10 @@ watch(
     grid-template-columns: 84px 1fr;
   }
 }
+
+@media (max-height: 820px) {
+  .stageHeader {
+    padding: 10px 12px;
+  }
+}
 </style>

@@ -200,6 +200,9 @@ async function onBothFileChange(e: Event) {
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(10px);
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
 }
 
 .panelTitle {

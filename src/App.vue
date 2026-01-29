@@ -65,25 +65,55 @@ const lottery = useLottery(setStatus);
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr) 320px;
+  grid-template-columns: clamp(240px, 22vw, 320px) minmax(0, 1fr) clamp(240px, 22vw, 320px);
   gap: 16px;
-  min-height: calc(100vh - 40px);
+  height: calc(100vh - 40px);
+  min-height: 0;
   align-items: stretch;
+  overflow: hidden;
 }
 
 .grid > * {
+  height: 100%;
   min-height: 0;
 }
 
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: 1fr;
-    min-height: auto;
+    height: auto;
     align-items: start;
+    overflow: visible;
+  }
+  .app {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+@media (max-height: 820px) {
+  .app {
+    padding: 14px;
+  }
+  .grid {
+    height: calc(100vh - 28px);
+    gap: 12px;
+  }
+}
+
+@media (max-height: 720px) {
+  .app {
+    padding: 10px;
+  }
+  .grid {
+    height: calc(100vh - 20px);
+    gap: 10px;
   }
 }
 </style>
