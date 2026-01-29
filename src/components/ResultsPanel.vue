@@ -60,6 +60,8 @@ defineProps<{
 .results {
   display: grid;
   gap: 10px;
+  align-content: start;
+  grid-auto-rows: max-content;
   overflow: auto;
   padding-right: 4px;
   box-sizing: border-box;
