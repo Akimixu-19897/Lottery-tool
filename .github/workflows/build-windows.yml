@@ -46,18 +46,10 @@ jobs:
       - name: Build (Tauri)
         shell: pwsh
         run: |
-          pnpm run tauri:build -- --no-bundle
+          pnpm run tauri:build
 
-      - name: Prepare portable zip
-        shell: pwsh
-        run: |
-          $outDir = "portable-windows"
-          New-Item -ItemType Directory -Force -Path $outDir | Out-Null
-          Copy-Item "src-tauri/target/release/app.exe" (Join-Path $outDir "LotteryTool.exe")
-          Copy-Item "src-tauri/target/release/*.dll" $outDir -ErrorAction SilentlyContinue
-
-      - name: Upload portable artifact
+      - name: Upload installer bundles
         uses: actions/upload-artifact@v4
         with:
-          name: portable-windows
-          path: portable-windows
+          name: tauri-bundle-windows
+          path: src-tauri/target/release/bundle
