@@ -53,12 +53,11 @@ jobs:
         run: |
           $outDir = "portable-windows"
           New-Item -ItemType Directory -Force -Path $outDir | Out-Null
-          Copy-Item "src-tauri/target/release/app.exe" $outDir
+          Copy-Item "src-tauri/target/release/app.exe" (Join-Path $outDir "LotteryTool.exe")
           Copy-Item "src-tauri/target/release/*.dll" $outDir -ErrorAction SilentlyContinue
-          Compress-Archive -Path "$outDir/*" -DestinationPath "portable-windows.zip" -Force
 
-      - name: Upload portable zip
+      - name: Upload portable artifact
         uses: actions/upload-artifact@v4
         with:
           name: portable-windows
-          path: portable-windows.zip
+          path: portable-windows
