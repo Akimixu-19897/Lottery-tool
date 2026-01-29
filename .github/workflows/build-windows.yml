@@ -1,0 +1,56 @@
+name: Build Windows Installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Enable pnpm (Corepack)
+        shell: pwsh
+        run: |
+          corepack enable
+          node -v
+          pnpm -v
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Windows bundler tools (WiX + NSIS)
+        shell: pwsh
+        run: |
+          choco install -y wixtoolset nsis
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Build (Tauri)
+        shell: pwsh
+        run: |
+          pnpm run tauri:build
+
+      - name: Upload bundles
+        uses: actions/upload-artifact@v4
+        with:
+          name: tauri-bundle-windows
+          path: src-tauri/target/release/bundle
+
